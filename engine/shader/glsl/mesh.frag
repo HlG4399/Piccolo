@@ -3,6 +3,7 @@
 #extension GL_GOOGLE_include_directive : enable
 
 #include "constants.h"
+#include "utilities.h"
 
 struct DirectionalLight
 {

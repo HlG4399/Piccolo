@@ -4,6 +4,7 @@
 
 #include "constants.h"
 #include "gbuffer.h"
+#include "utilities.h"
 
 struct DirectionalLight
 {

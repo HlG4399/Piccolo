@@ -96,7 +96,7 @@ highp vec3 Libl = (kD * diffuse + specular);
     if (NoL > 0.0)
     {
         highp float shadow;
-        {
+        //{
             highp vec4 position_clip = directional_light_proj_view * vec4(in_world_position, 1.0);
             highp vec3 position_ndc  = position_clip.xyz / position_clip.w;
 
@@ -105,13 +105,19 @@ highp vec3 Libl = (kD * diffuse + specular);
             highp float closest_depth = texture(directional_light_shadow, uv).r + 0.000075;
             highp float current_depth = position_ndc.z;
 
-            shadow = (closest_depth >= current_depth) ? 1.0f : -1.0f;
-        }
+            shadow = (closest_depth < current_depth) ? 1.0f : -1.0f;
+        //}
 
-        if (shadow > 0.0f)
+        if (shadow <= 0.0f)
         {
             highp vec3 En = scene_directional_light.color * NoL;
             Lo += BRDF(L, V, N, F0, basecolor, metallic, roughness) * En;
+        }
+        else
+        {
+            highp float visibility = PCSS(directional_light_shadow, vec4(position_ndc, 1.0f));
+            La *= visibility;
+            Libl *= visibility;
         }
     }
 }
