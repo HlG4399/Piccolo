@@ -115,7 +115,8 @@ highp vec3 Libl = (kD * diffuse + specular);
         }
         else
         {
-            highp float visibility = PCSS(directional_light_shadow, vec4(position_ndc, 1.0f));
+            highp vec4  coords     = vec4(uv.x, uv.y, position_clip.z, 1.0f);
+            highp float visibility = PCSS(directional_light_shadow, coords);
             La *= visibility;
             Libl *= visibility;
         }
